@@ -8,3 +8,43 @@ timer_check = "";
 drawn_sketch = "";
 answer_holder = "";
 score = 0;
+function setup() {
+    canvas = createCanvas(280, 280);
+    canvas.center();
+    background("white");
+}
+function clearCanvas() {
+    background("white");
+}
+function updateCanvas() {
+    background("white");
+    random_number = Math.floor(Math.random() * quick_draw_data_set.length) + 1;
+    console.log(quick_draw_data_set[random_number]);
+    sketch = quick_draw_data_set[random_number];
+}
+function draw() {
+    if(drawn_sketch == sketch){
+        answer_holder = "set";
+        score += 1;
+        document.getElementById('score').innerHTML = "Score : " + score;
+    }
+    strokeWeight(13);
+    stroke(0);
+    if(mouseIsPressed){
+        line(pmouseX, pmouseY, mouseX, mouseY);
+    }
+}
+function checkSketch() {
+    timer_counter += 1;
+    document.getElementById('timer').innerHTML = "timer : "+ timer_counter;
+    console.log(timer_counter);
+    if(timer_counter > 400) {
+        timer_check = "completed";
+        timer_counter = 0;
+    }
+    if (timer_check == "completed" || answer_holder == "set") {
+        timer_check = "";
+        answer_holder = "";
+        updateCanvas();
+    }
+}
